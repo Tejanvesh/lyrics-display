@@ -386,6 +386,108 @@ button:active:not(:disabled) {
   border-color: #555;
 }
 
+/* ── speed control ── */
+.speed-control {
+  width: 100%;
+  margin-bottom: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.speed-control label {
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver-dim);
+}
+
+.speed-control label #speedLabel {
+  color: var(--red);
+  font-weight: 500;
+  margin-left: 0.2em;
+  min-width: 2.5ch;
+  display: inline-block;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.speed-cap {
+  font-size: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: #2e2e2e;
+  white-space: nowrap;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* filled portion via a CSS trick using a linear-gradient updated by JS */
+input[type="range"].filled {
+  background: linear-gradient(
+    to right,
+    var(--red) 0%,
+    var(--red) var(--fill),
+    #1a1a1a var(--fill),
+    #1a1a1a 100%
+  );
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px var(--red-bright), 0 0 14px var(--red);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px var(--red-bright), 0 0 14px var(--red);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb,
+input[type="range"]:focus::-webkit-slider-thumb {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px var(--red-bright), 0 0 22px var(--red);
+}
+
+input[type="range"]:hover::-moz-range-thumb,
+input[type="range"]:focus::-moz-range-thumb {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px var(--red-bright), 0 0 22px var(--red);
+}
+
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--red-bright);
+  outline-offset: 4px;
+}
+
 /* ── keyboard hint strip ── */
 .kbd-hints {
   display: flex;

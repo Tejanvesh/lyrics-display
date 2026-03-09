@@ -83,6 +83,37 @@ for (let i = 0; i < 9; i++) {
   zipperEl.appendChild(t);
 }
 
+/* ── speed control ── */
+const speedSlider = document.getElementById('speedSlider');
+const speedLabel  = document.getElementById('speedLabel');
+
+function getDelay() {
+  // 1.0× = 2000 ms; speed multiplier compresses the interval
+  return Math.round(2000 / parseFloat(speedSlider.value));
+}
+
+function updateSliderFill() {
+  const min = parseFloat(speedSlider.min);
+  const max = parseFloat(speedSlider.max);
+  const val = parseFloat(speedSlider.value);
+  const pct = ((val - min) / (max - min)) * 100;
+  speedSlider.style.setProperty('--fill', `${pct}%`);
+  speedSlider.classList.add('filled');
+}
+
+speedSlider.addEventListener('input', () => {
+  const val = parseFloat(speedSlider.value);
+  speedLabel.textContent = `${val.toFixed(2).replace(/\.?0+$/, '')}×`;
+  updateSliderFill();
+  // if currently playing, restart the interval at the new speed
+  if (playing) {
+    clearInterval(timer);
+    timer = setInterval(advance, getDelay());
+  }
+});
+
+updateSliderFill();
+
 /* ── app state ── */
 let current = 0;
 let playing = false;
@@ -133,20 +164,22 @@ function render(animate) {
   teeth.forEach((t, i) => t.classList.toggle('lit', i === lit));
 }
 
+function advance() {
+  if (current < lyrics.length - 1) {
+    current++;
+    render(true);
+  } else {
+    playing = false;
+    clearInterval(timer);
+    timer = null;
+    render(false);
+  }
+}
+
 function startPlay() {
   playing = true;
   render(false);
-  timer = setInterval(() => {
-    if (current < lyrics.length - 1) {
-      current++;
-      render(true);
-    } else {
-      playing = false;
-      clearInterval(timer);
-      timer = null;
-      render(false);
-    }
-  }, 2000);
+  timer = setInterval(advance, getDelay());
 }
 
 function pausePlay() {

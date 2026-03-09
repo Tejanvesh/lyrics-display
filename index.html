@@ -48,6 +48,20 @@
       <button id="nextBtn" aria-label="Next line">Next &#8594;</button>
     </div>
 
+    <!-- speed control -->
+    <div class="speed-control">
+      <label for="speedSlider">
+        Speed <span id="speedLabel">1.0×</span>
+      </label>
+      <div class="slider-row">
+        <span class="speed-cap">0.5×</span>
+        <input type="range" id="speedSlider"
+               min="0.5" max="3" step="0.25" value="1"
+               aria-label="Playback speed">
+        <span class="speed-cap">3×</span>
+      </div>
+    </div>
+
     <!-- keyboard hints -->
     <div class="kbd-hints" aria-hidden="true">
       <span class="kbd-hint"><kbd>&#8592;</kbd> prev</span>

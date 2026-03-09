@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beat It — Michael Jackson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- header -->
+    <header class="header">
+      <div class="fedora">
+        <div class="fedora-crown"></div>
+        <div class="fedora-brim"></div>
+      </div>
+      <h1 class="song-title">Beat It</h1>
+      <div class="title-underline"></div>
+      <p class="song-artist">Michael Jackson</p>
+      <div class="zipper" id="zipper"></div>
+    </header>
+
+    <!-- lyric stage -->
+    <div class="stage">
+      <div class="line-number" id="lineNumber"></div>
+      <div class="lyric-wrapper" aria-live="polite" aria-atomic="true">
+        <div class="lyric-line" id="lyricLine"></div>
+      </div>
+    </div>
+
+    <!-- progress -->
+    <div class="progress-area">
+      <div class="progress-text" id="progress"></div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+    </div>
+
+    <!-- controls -->
+    <div class="controls" role="group" aria-label="Playback controls">
+      <button id="prevBtn" aria-label="Previous line">&#8592; Prev</button>
+      <button id="playBtn" aria-label="Play" aria-pressed="false">Play</button>
+      <button id="nextBtn" aria-label="Next line">Next &#8594;</button>
+    </div>
+
+    <!-- keyboard hints -->
+    <div class="kbd-hints" aria-hidden="true">
+      <span class="kbd-hint"><kbd>&#8592;</kbd> prev</span>
+      <span class="kbd-hint"><kbd>Space</kbd> play / pause</span>
+      <span class="kbd-hint"><kbd>&#8594;</kbd> next</span>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

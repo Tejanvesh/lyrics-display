@@ -1,0 +1,466 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --red:        #cc0000;
+  --red-bright: #ff1a1a;
+  --red-dim:    #6b0000;
+  --silver:     #c8c8c8;
+  --silver-dim: #555;
+  --black:      #000000;
+  --surface:    #0d0d0d;
+  --panel:      #111111;
+  --border:     #1f1f1f;
+}
+
+/* ── base ── */
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  padding: 1.5rem 1rem;
+  overflow-x: hidden;
+
+  /* stage spotlight from above */
+  background-image:
+    radial-gradient(ellipse 70% 55% at 50% -10%,
+      #3a0000 0%, #1a0000 40%, transparent 70%);
+}
+
+/* diagonal leather-jacket panel texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent        0px,
+    transparent        18px,
+    rgba(180,0,0,0.03) 18px,
+    rgba(180,0,0,0.03) 19px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── sequin / glove sparkles (injected by JS) ── */
+.sparkle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: #fff;
+  animation: twinkle linear infinite;
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0;    transform: scale(0); }
+  30%  { opacity: 0.9;  transform: scale(1); }
+  60%  { opacity: 0.3;  transform: scale(0.6); }
+  100% { opacity: 0;    transform: scale(0); }
+}
+
+/* ── layout ── */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 660px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ────────────── HEADER ────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* CSS fedora hat */
+.fedora {
+  margin: 0 auto 1.4rem;
+  width: 70px;
+  position: relative;
+}
+.fedora-crown {
+  width: 42px;
+  height: 28px;
+  background: var(--surface);
+  border: 2px solid #2a2a2a;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  margin: 0 auto;
+  position: relative;
+}
+/* indent on top of crown */
+.fedora-crown::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 10px;
+  border-top: 2px solid #1a1a1a;
+  border-radius: 50%;
+}
+/* red hat band */
+.fedora-crown::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  right: -2px;
+  height: 5px;
+  background: var(--red);
+}
+.fedora-brim {
+  width: 70px;
+  height: 9px;
+  background: var(--surface);
+  border: 2px solid #2a2a2a;
+  border-top: none;
+  border-radius: 0 0 40px 40px;
+  margin: 0 auto;
+}
+
+.song-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 12vw, 5.5rem);
+  letter-spacing: 0.08em;
+  line-height: 0.9;
+  color: #fff;
+  text-shadow:
+    0 0 40px rgba(204, 0, 0, 0.6),
+    4px 4px 0px var(--red-dim);
+}
+
+.title-underline {
+  width: 60px;
+  height: 3px;
+  background: var(--red);
+  margin: 0.6rem auto 0.9rem;
+  position: relative;
+}
+.title-underline::before,
+.title-underline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 3px;
+  background: var(--red-bright);
+}
+.title-underline::before { left: -10px; }
+.title-underline::after  { right: -10px; }
+
+.song-artist {
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--silver-dim);
+}
+
+/* ── zipper-style divider ── */
+.zipper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 1.4rem 0 0;
+  width: 100%;
+  justify-content: center;
+}
+.zipper-tooth {
+  width: 6px;
+  height: 6px;
+  background: var(--border);
+  transform: rotate(45deg);
+  transition: background 0.3s;
+}
+.zipper-tooth.lit {
+  background: var(--red);
+  box-shadow: 0 0 6px var(--red);
+}
+
+/* ────────────── STAGE ────────────── */
+.stage {
+  width: 100%;
+  min-height: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  margin-bottom: 1.8rem;
+  position: relative;
+  border-top: 1px solid var(--red-dim);
+  border-bottom: 1px solid var(--red-dim);
+  background: radial-gradient(ellipse 80% 70% at 50% 50%,
+    rgba(60,0,0,0.4) 0%, transparent 70%);
+}
+
+.line-number {
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--red-dim);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.lyric-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lyric-line {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.25rem, 4.5vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 0 0.5rem;
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity  0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+
+.lyric-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+  text-shadow: 0 0 30px rgba(204, 0, 0, 0.35);
+}
+
+/* ────────────── PROGRESS ────────────── */
+.progress-area {
+  width: 100%;
+  margin-bottom: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.progress-text {
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver-dim);
+}
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  position: relative;
+  overflow: visible;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--red-dim) 0%, var(--red) 80%, var(--red-bright) 100%);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* glowing dot at tip of progress */
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red-bright), 0 0 18px var(--red);
+}
+
+/* ────────────── CONTROLS ────────────── */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+button {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background  0.18s ease,
+    color       0.18s ease,
+    box-shadow  0.18s ease,
+    transform   0.1s ease,
+    opacity     0.18s ease;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--red-bright);
+  outline-offset: 3px;
+  box-shadow: 0 0 12px rgba(255, 26, 26, 0.5);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+#prevBtn, #nextBtn {
+  background: transparent;
+  color: var(--silver-dim);
+  border: 1px solid #2a2a2a;
+  padding: 0.6rem 1.3rem;
+}
+
+#prevBtn:hover:not(:disabled),
+#nextBtn:hover:not(:disabled) {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: var(--red-dim);
+}
+
+#prevBtn:disabled, #nextBtn:disabled {
+  opacity: 0.18;
+  cursor: not-allowed;
+}
+
+#playBtn {
+  background: var(--red);
+  color: #fff;
+  padding: 0.6rem 2.2rem;
+  min-width: 106px;
+  font-weight: 500;
+  box-shadow: 0 0 20px rgba(204,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+#playBtn:hover {
+  background: var(--red-bright);
+  box-shadow: 0 0 32px rgba(255,26,26,0.55);
+}
+
+#playBtn.paused {
+  background: #1a1a1a;
+  color: var(--silver);
+  border: 1px solid #333;
+  box-shadow: none;
+}
+
+#playBtn.paused:hover {
+  background: #222;
+  color: #fff;
+  border-color: #555;
+}
+
+/* ── keyboard hint strip ── */
+.kbd-hints {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.8rem;
+}
+
+.kbd-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3a3a3a;
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.3rem;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #444;
+}
+
+/* ── key-flash feedback ── */
+@keyframes key-flash {
+  0%   { background: var(--red-dim); color: #fff; border-color: var(--red); }
+  100% { background: transparent; color: var(--silver-dim); border-color: #2a2a2a; }
+}
+
+#prevBtn.key-flash, #nextBtn.key-flash {
+  animation: key-flash 0.25s ease-out forwards;
+}
+
+/* ── responsive ── */
+@media (max-width: 480px) {
+  body {
+    justify-content: flex-start;
+    padding-top: 2.5rem;
+  }
+  .song-title {
+    font-size: clamp(2.8rem, 16vw, 5rem);
+  }
+  .stage {
+    padding: 2rem 0.75rem;
+    min-height: 7rem;
+  }
+  #prevBtn, #nextBtn {
+    padding: 0.55rem 1rem;
+    font-size: 0.75rem;
+  }
+  #playBtn {
+    padding: 0.55rem 1.8rem;
+    min-width: 94px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lyric-line {
+    transition: opacity 0.2s ease;
+    transform: none !important;
+  }
+  .sparkle { animation: none; opacity: 0.15; }
+}
